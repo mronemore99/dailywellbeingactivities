@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Wellbeing Activities</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Wellbeing Activities</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .challenge-text {
+            color: #555;
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .generate-button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+        .generate-button:hover {
+            background-color: #2980b9;
+        }
+        .activity-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        .activity-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s;
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .activity-card:hover {
+            transform: translateY(-5px);
+        }
+        .icon {
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: #fff;
+        }
+        .activity-content h3 {
+            margin: 0 0 10px;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .activity-content p {
+            margin: 0;
+            color: #666;
+            line-height: 1.5;
+        }
+        /* Color schemes for each group */
+        .global-awareness { background-color: #ff6b6b; } /* Red */
+        .inspirational-quotes { background-color: #4ecdc4; } /* Teal */
+        .mindfulness-meditation { background-color: #45b7d1; } /* Blue */
+        .physical-wellness { background-color: #ff9f43; } /* Orange */
+        .creative-expression { background-color: #96ce82; } /* Green */
+        .gratitude-reflection { background-color: #f7a1c4; } /* Pink */
+        .connection-community { background-color: #6d8299; } /* Slate */
+        .nature-environment { background-color: #4a7043; } /* Forest Green */
+        .learning-growth { background-color: #9b59b6; } /* Purple */
+        .rest-relaxation { background-color: #3498db; } /* Sky Blue */
+    </style>
+</head>
+<body>
+    <h1>Daily Wellbeing Activities</h1>
+    <p class="challenge-text" id="challengeText">Ignite Your Day with These 6 Wellbeing Challenges!</p>
+    <div class="activity-container" id="activityContainer"></div>
+    <button class="generate-button" onclick="generateActivities()">Generate New Activities</button>
+
+    <script>
+        // Tagline bank
+        const taglines = [
+            "Ignite Your Day with These 6 Wellbeing Challenges!",
+            "Spark Your Joy with These 6 Wellness Challenges!",
+            "Embrace Today with These 6 Wellbeing Boosts!",
+            "Fuel Your Spirit with These 6 Daily Challenges!",
+            "Brighten Your Day with These 6 Wellness Sparks!",
+            "Transform Your Day with These 6 Wellbeing Ideas!",
+            "Energize Your Life with These 6 Wellness Challenges!",
+            "Inspire Your Day with These 6 Wellbeing Boosts!",
+            "Uplift Your Spirit with These 6 Daily Challenges!",
+            "Shine Bright with These 6 Wellness Ideas!",
+            "Kickstart Your Day with These 6 Wellbeing Challenges!",
+            "Nourish Your Soul with These 6 Wellness Boosts!",
+            "Thrive Today with These 6 Daily Challenges!",
+            "Elevate Your Day with These 6 Wellbeing Sparks!",
+            "Awaken Your Joy with These 6 Wellness Challenges!",
+            "Empower Your Day with These 6 Wellbeing Ideas!",
+            "Radiate Positivity with These 6 Daily Challenges!",
+            "Boost Your Day with These 6 Wellness Sparks!",
+            "Live Vibrantly with These 6 Wellbeing Challenges!",
+            "Find Your Balance with These 6 Wellness Boosts!",
+            "Celebrate Today with These 6 Daily Challenges!",
+            "Glow Up with These 6 Wellbeing Ideas!",
+            "Start Strong with These 6 Wellness Challenges!",
+            "Recharge Your Day with These 6 Wellbeing Boosts!",
+            "Seize the Day with These 6 Daily Challenges!",
+            "Harmonize Your Life with These 6 Wellness Sparks!",
+            "Light Up Your Day with These 6 Wellbeing Challenges!",
+            "Grow Today with These 6 Wellness Ideas!",
+            "Feel Alive with These 6 Daily Challenges!",
+            "Embrace Wellness with These 6 Wellbeing Boosts!"
+        ];
+
+        // Activity data
+        const activities = [
+            {
+                group: "Global Awareness",
+                icon: "fa-solid fa-calendar-day",
+                colorClass: "global-awareness",
+                items: [
+                    "Pick up litter in your neighborhood.",
+                    "Perform a random act of kindness.",
+                    "Try a beginner yoga pose.",
+                    "Journal your feelings to reflect on your mental health.",
+                    "Teach someone about the importance of hygiene.",
+                    "Read a new short story.",
+                    "Learn about a female role model.",
+                    "Reduce plastic use for the day.",
+                    "Smile at 5 people to spread positivity.",
+                    "Plan a nutritious meal.",
+                    "Organize a community clean-up event.",
+                    "Share a tip for sustainable living with a friend.",
+                    "Learn about a global health issue.",
+                    "Donate unused clothes to a local charity.",
+                    "Practice water conservation for the day.",
+                    "Research a cultural tradition from another country.",
+                    "Support a local business with a purchase or review.",
+                    "Create a poster promoting inclusivity.",
+                    "Volunteer for an environmental cause.",
+                    "Learn about renewable energy sources.",
+                    "Write a letter advocating for a social cause.",
+                    "Promote recycling in your household or workplace.",
+                    "Explore a podcast on global issues.",
+                    "Cook a meal using locally sourced ingredients.",
+                    "Join a discussion on community safety.",
+                    "Learn about endangered species and how to help.",
+                    "Share a resource on mental health awareness.",
+                    "Participate in a virtual event for a global cause.",
+                    "Teach a child about kindness and empathy.",
+                    "Create a social media post about a charity you support.",
+                    "Learn about fair trade products.",
+                    "Share a water-saving tip with your community.",
+                    "Research a global education initiative.",
+                    "Organize a book drive for a local school.",
+                    "Learn about a local charity’s mission.",
+                    "Promote energy-saving habits at home.",
+                    "Create a flyer about community volunteering.",
+                    "Learn about a human rights issue.",
+                    "Share a plant-based recipe with a friend.",
+                    "Join a local environmental group.",
+                    "Research the impact of climate change locally.",
+                    "Teach someone about reducing food waste.",
+                    "Create a gratitude board for your community.",
+                    "Learn about a global peace initiative.",
+                    "Share a story of positive community impact.",
+                    "Promote bike or walk-to-work options.",
+                    "Learn about accessible public spaces.",
+                    "Organize a neighborhood safety walk.",
+                    "Research a global women’s empowerment program.",
+                    "Share a tip on supporting local artisans.",
+                    "Learn about a global food security initiative.",
+                    "Create a guide for reducing household waste.",
+                    "Share a story about cultural diversity.",
+                    "Learn about urban farming initiatives.",
+                    "Promote digital detox practices in your community.",
+                    "Research a global clean water project.",
+                    "Organize a clothing swap event.",
+                    "Learn about indigenous rights and history.",
+                    "Share a tip on ethical shopping.",
+                    "Create a community art project for awareness.",
+                    "Learn about global refugee support programs.",
+                    "Promote public transportation in your area.",
+                    "Research a local animal welfare organization.",
+                    "Share a tip on reducing energy consumption.",
+                    "Learn about global literacy programs.",
+                    "Organize a virtual panel on sustainability.",
+                    "Create a mural promoting unity.",
+                    "Learn about a global anti-poverty initiative.",
+                    "Share a resource on workplace inclusivity.",
+                    "Research a local green energy project.",
+                    "Promote composting in your neighborhood.",
+                    "Learn about global child welfare programs.",
+                    "Share a tip on supporting small farmers.",
+                    "Create a video about a local cause."
+                ]
+            },
+            {
+                group: "Inspirational Quotes or Phrases",
+                icon: "fa-solid fa-quote-left",
+                colorClass: "inspirational-quotes",
+                items: [
+                    "Reflect on: 'The best time to plant a tree was 20 years ago. The second best time is now.'",
+                    "Meditate on: 'You are enough just as you are.'",
+                    "Share: 'Every day is a new beginning.'",
+                    "Contemplate: 'Progress, not perfection.'",
+                    "Repeat: 'I am capable of amazing things.'",
+                    "Journal about: 'What you seek is seeking you.'",
+                    "Reflect on: 'Be the change you wish to see.'",
+                    "Share: 'Small steps lead to big changes.'",
+                    "Meditate on: 'You have the power to create joy.'",
+                    "Reflect on: 'The journey is the destination.'",
+                    "Write about: 'The only limit is your mind.'",
+                    "Repeat: 'I choose to shine today.'",
+                    "Contemplate: 'Kindness is a gift everyone can afford.'",
+                    "Share: 'Your potential is endless.'",
+                    "Meditate on: 'Breathe in courage, exhale fear.'",
+                    "Journal about: 'Today, I will embrace change.'",
+                    "Reflect on: 'Every moment is a fresh start.'",
+                    "Repeat: 'I am stronger than my challenges.'",
+                    "Contemplate: 'Happiness is an inside job.'",
+                    "Share: 'Dream big, work small.'",
+                    "Write about: 'The future belongs to those who believe.'",
+                    "Meditate on: 'Peace begins with me.'",
+                    "Repeat: 'I am worthy of my dreams.'",
+                    "Contemplate: 'Growth happens outside your comfort zone.'",
+                    "Share: 'You are the author of your story.'",
+                    "Journal about: 'What makes my heart sing?'",
+                    "Reflect on: 'Courage is taking one step at a time.'",
+                    "Repeat: 'I radiate positivity.'",
+                    "Contemplate: 'Every challenge is an opportunity.'",
+                    "Share: 'Your smile can change the world.'",
+                    "Write about: 'I am the architect of my happiness.'",
+                    "Meditate on: 'Let go of what no longer serves you.'",
+                    "Repeat: 'I am a work in progress, and that’s okay.'",
+                    "Contemplate: 'Your vibe attracts your tribe.'",
+                    "Share: 'Every sunrise is a new chance.'",
+                    "Journal about: 'What fuels my passion?'",
+                    "Reflect on: 'I am more than my fears.'",
+                    "Repeat: 'I choose joy today.'",
+                    "Contemplate: 'Life is a canvas; paint it boldly.'",
+                    "Share: 'You are never too old to dream.'",
+                    "Write about: 'My heart is open to possibilities.'",
+                    "Meditate on: 'I am grounded in the present.'",
+                    "Repeat: 'I am enough, always.'",
+                    "Contemplate: 'The best is yet to come.'",
+                    "Share: 'Your light inspires others.'",
+                    "Journal about: 'What legacy do I want to leave?'",
+                    "Reflect on: 'I grow through what I go through.'",
+                    "Repeat: 'I am unstoppable.'",
+                    "Contemplate: 'Love is the answer.'",
+                    "Share: 'You are a gift to the world.'",
+                    "Write about: 'I create my own opportunities.'",
+                    "Meditate on: 'I am at peace with my past.'",
+                    "Repeat: 'I am a beacon of hope.'",
+                    "Contemplate: 'Every breath is a new beginning.'",
+                    "Share: 'You are stronger than you know.'",
+                    "Journal about: 'What brings me calm?'",
+                    "Reflect on: 'I am the hero of my own story.'",
+                    "Repeat: 'I embrace my unique journey.'",
+                    "Contemplate: 'Possibilities are endless.'",
+                    "Share: 'Your kindness changes everything.'",
+                    "Write about: 'I am grateful for today.'",
+                    "Meditate on: 'I release all doubts.'",
+                    "Repeat: 'I am filled with purpose.'",
+                    "Contemplate: 'Every step forward counts.'",
+                    "Share: 'You are a spark of brilliance.'",
+                    "Journal about: 'What makes me feel alive?'",
+                    "Reflect on: 'I am defined by my actions.'",
+                    "Repeat: 'I choose to be present.'",
+                    "Contemplate: 'My heart guides my path.'",
+                    "Share: 'You are capable of greatness.'",
+                    "Write about: 'I am proud of who I am.'",
+                    "Meditate on: 'I am connected to all things.'",
+                    "Repeat: 'I am a force for good.'",
+                    "Contemplate: 'Life unfolds perfectly.'",
+                    "Share: 'Your courage inspires me.'"
+                ]
+            },
+            {
+                group: "Mindfulness & Meditation",
+                icon: "fa-solid fa-spa",
+                colorClass: "mindfulness-meditation",
+                items: [
+                    "Practice 5 minutes of deep breathing, focusing on your breath.",
+                    "Try a 3-minute body scan meditation to relax.",
+                    "Focus on one object for 2 minutes, noticing its details.",
+                    "Practice mindful eating during your next meal.",
+                    "Try a 5-minute guided meditation from an app or video.",
+                    "Sit quietly and listen to ambient sounds for 5 minutes.",
+                    "Practice 5 minutes of alternate nostril breathing.",
+                    "Visualize a peaceful place for 3 minutes.",
+                    "Practice a 2-minute gratitude meditation.",
+                    "Focus on your breath while counting to 10 slowly.",
+                    "Try a 5-minute loving-kindness meditation.",
+                    "Spend 3 minutes observing your thoughts without judgment.",
+                    "Practice mindful walking for 5 minutes.",
+                    "Close your eyes and focus on a calming word for 2 minutes.",
+                    "Try a 4-7-8 breathing exercise for 3 rounds.",
+                    "Meditate on a positive affirmation for 5 minutes.",
+                    "Listen to a mindfulness bell and focus on the sound.",
+                    "Practice a 3-minute grounding exercise (feel your feet, hands).",
+                    "Visualize releasing stress with each exhale for 5 minutes.",
+                    "Try a 2-minute meditation focusing on your heartbeat.",
+                    "Spend 5 minutes in silence, noticing your surroundings.",
+                    "Practice a 3-minute self-compassion meditation.",
+                    "Focus on the sensation of drinking a warm beverage.",
+                    "Try a 5-minute mindfulness of emotions exercise.",
+                    "Meditate on a color, visualizing it in your mind for 3 minutes.",
+                    "Practice 5 minutes of progressive breath awareness.",
+                    "Spend 2 minutes focusing on a single scent (e.g., a candle).",
+                    "Try a 3-minute meditation on forgiveness.",
+                    "Practice mindful listening to a song for 5 minutes.",
+                    "Visualize a serene lake for 3 minutes to calm your mind.",
+                    "Practice a 5-minute mindful stretching session.",
+                    "Focus on the texture of an object for 2 minutes.",
+                    "Try a 3-minute meditation on letting go.",
+                    "Spend 5 minutes noticing the air on your skin.",
+                    "Practice a 2-minute mindfulness of sounds exercise.",
+                    "Meditate on a happy memory for 3 minutes.",
+                    "Try a 5-minute open-awareness meditation.",
+                    "Focus on your posture for 2 minutes, adjusting gently.",
+                    "Practice a 3-minute meditation on patience.",
+                    "Spend 5 minutes focusing on your breath’s rhythm.",
+                    "Try a 2-minute meditation on joy.",
+                    "Visualize a warm light filling your body for 3 minutes.",
+                    "Practice mindful sipping of water for 2 minutes.",
+                    "Try a 5-minute meditation on balance.",
+                    "Spend 3 minutes noticing your body’s contact points.",
+                    "Practice a 2-minute mindfulness of taste exercise.",
+                    "Meditate on a goal you’re working toward for 3 minutes.",
+                    "Try a 5-minute walking meditation in a small space.",
+                    "Focus on the sensation of your clothes for 2 minutes.",
+                    "Practice a 3-minute meditation on acceptance.",
+                    "Practice a 3-minute mindfulness of touch exercise.",
+                    "Spend 5 minutes focusing on a distant sound.",
+                    "Try a 2-minute meditation on curiosity.",
+                    "Visualize a gentle breeze for 3 minutes.",
+                    "Practice mindful brushing of your hair or teeth.",
+                    "Try a 5-minute meditation on inner strength.",
+                    "Spend 3 minutes focusing on your hands’ sensations.",
+                    "Practice a 2-minute mindfulness of movement exercise.",
+                    "Meditate on a moment of kindness for 3 minutes.",
+                    "Try a 5-minute meditation on clarity.",
+                    "Spend 2 minutes noticing your facial expressions.",
+                    "Practice a 3-minute mindfulness of warmth exercise.",
+                    "Visualize a mountain for 3 minutes to feel grounded.",
+                    "Try a 5-minute meditation on trust.",
+                    "Spend 3 minutes focusing on your breath’s temperature.",
+                    "Practice a 2-minute mindfulness of stillness exercise.",
+                    "Meditate on a moment of courage for 3 minutes.",
+                    "Try a 5-minute meditation on hope.",
+                    "Spend 2 minutes noticing the weight of your body.",
+                    "Practice a 3-minute mindfulness of light exercise.",
+                    "Visualize a flowing river for 3 minutes.",
+                    "Try a 5-minute meditation on gratitude for life.",
+                    "Spend 3 minutes focusing on your breath’s sound.",
+                    "Practice a 2-minute mindfulness of space exercise."
+                ]
+            },
+            {
+                group: "Physical Wellness",
+                icon: "fa-solid fa-dumbbell",
+                colorClass: "physical-wellness",
+                items: [
+                    "Do a 10-minute bodyweight workout (squats, push-ups, lunges).",
+                    "Go for a 15-minute brisk walk in your neighborhood.",
+                    "Stretch your arms and legs for 5 minutes.",
+                    "Do 10 jumping jacks to boost energy.",
+                    "Dance to your favorite song for 5 minutes in your room.",
+                    "Try a 5-minute core workout (planks, crunches).",
+                    "Walk up and down stairs for 5 minutes if available.",
+                    "Try a 10-minute yoga flow without a mat.",
+                    "Do a quick 5-minute cardio session (running in place).",
+                    "Hold a plank for 30 seconds, rest, and repeat 3 times.",
+                    "Do a 7-minute HIIT workout (bodyweight only).",
+                    "Take a 10-minute walk around your block.",
+                    "Practice 5 minutes of dynamic stretching.",
+                    "Try 10 burpees to get your heart rate up.",
+                    "Do a 5-minute arm circle routine.",
+                    "Go for a 20-minute jog in your neighborhood.",
+                    "Practice a 5-minute balance exercise (single-leg stands).",
+                    "Try a 10-minute bodyweight Pilates routine.",
+                    "Do 15 squats with proper form.",
+                    "Take a 5-minute walk focusing on posture.",
+                    "Try a 7-minute stretching routine for flexibility.",
+                    "Do 10 push-ups, rest, and repeat twice.",
+                    "Practice a 5-minute tai chi-inspired sequence.",
+                    "March in place for 3 minutes with breaks.",
+                    "Do a 10-minute bodyweight circuit (lunges, planks, jumps).",
+                    "Try a 5-minute leg workout (calf raises, leg lifts).",
+                    "Take a 15-minute walk in a nearby park.",
+                    "Do a 5-minute cooldown stretch.",
+                    "Practice 10 minutes of gentle stretching.",
+                    "Try a 5-minute mobility routine for joints.",
+                    "Do a 5-minute bodyweight squat routine.",
+                    "Take a 10-minute brisk walk in your neighborhood.",
+                    "Practice 5 minutes of shadow boxing.",
+                    "Try a 7-minute bodyweight strength circuit.",
+                    "Do 10 mountain climbers, rest, and repeat twice.",
+                    "Take a 5-minute walk with high knees.",
+                    "Try a 10-minute bodyweight barre-inspired routine.",
+                    "Do a 5-minute hip mobility routine.",
+                    "Practice 5 minutes of jumping squats.",
+                    "Try a 7-minute cardio dance routine.",
+                    "Do a 5-minute back strengthening routine.",
+                    "Take a 10-minute walk with side steps.",
+                    "Practice 5 minutes of side lunges.",
+                    "Try a 5-minute bodyweight arm punch routine.",
+                    "Do a 7-minute full-body stretch.",
+                    "Take a 5-minute walk with arm swings.",
+                    "Practice 5 minutes of wall sits.",
+                    "Try a 10-minute bodyweight Zumba-inspired routine.",
+                    "Do a 5-minute glute bridge routine.",
+                    "Take a 5-minute mindful movement session.",
+                    "Do a 5-minute stair-climbing workout if stairs are nearby.",
+                    "Try a 7-minute bodyweight cardio routine.",
+                    "Practice 5 minutes of bear crawls in a small space.",
+                    "Do a 10-minute stretching routine for mobility.",
+                    "Try a 5-minute upper body stretch routine.",
+                    "Take a 10-minute walk with lunges every minute.",
+                    "Practice 5 minutes of seated stretches if space is limited.",
+                    "Do a 7-minute bodyweight cardio circuit.",
+                    "Try a 5-minute ankle mobility routine.",
+                    "Practice 5 minutes of high-intensity sprints in place.",
+                    "Do a 10-minute gentle bodyweight yoga routine.",
+                    "Try a 5-minute forearm and wrist stretch.",
+                    "Take a 5-minute walk with deep breathing.",
+                    "Practice 5 minutes of donkey kicks.",
+                    "Do a 7-minute dynamic warm-up routine.",
+                    "Try a 5-minute core stability workout (bird dogs, planks).",
+                    "Practice 5 minutes of standing leg swings.",
+                    "Do a 10-minute low-impact cardio routine in place.",
+                    "Try a 5-minute shoulder mobility routine.",
+                    "Practice 5 minutes of bicycle crunches.",
+                    "Do a 7-minute flexibility-focused bodyweight routine.",
+                    "Try a 5-minute standing core workout.",
+                    "Practice 5 minutes of lateral hops in a small space.",
+                    "Do a 10-minute mindful walking routine in your area."
+                ]
+            },
+            {
+                group: "Creative Expression",
+                icon: "fa-solid fa-paintbrush",
+                colorClass: "creative-expression",
+                items: [
+                    "Draw a picture of your favorite place in nature.",
+                    "Write a short poem about your current mood.",
+                    "Create a collage from old magazines or digital images.",
+                    "Paint or color a picture with bright colors.",
+                    "Write a 100-word story about a magical adventure.",
+                    "Design a poster for an imaginary event.",
+                    "Create a playlist of songs that inspire you.",
+                    "Sketch a self-portrait with your non-dominant hand.",
+                    "Write a letter to a fictional character.",
+                    "Create a comic strip about your day.",
+                    "Doodle a pattern for 5 minutes.",
+                    "Write a haiku about the weather today.",
+                    "Design a dream house floor plan.",
+                    "Create a vision board with online images.",
+                    "Write a dialogue between two animals.",
+                    "Paint a picture inspired by a song.",
+                    "Compose a short melody on an instrument or app.",
+                    "Sketch a scene from a dream you had.",
+                    "Write a story starting with 'Once upon a time...'.",
+                    "Create a photo montage of your day.",
+                    "Design a logo for a made-up company.",
+                    "Write a rap about your favorite hobby.",
+                    "Draw a map of a fictional world.",
+                    "Create a sculpture from household items.",
+                    "Write a poem inspired by a color.",
+                    "Design a book cover for your life story.",
+                    "Make a short video about something you love.",
+                    "Write a letter from your future self.",
+                    "Create a pattern inspired by nature.",
+                    "Sketch a favorite childhood memory.",
+                    "Write a story about a talking tree.",
+                    "Create a mandala with colored pencils.",
+                    "Design a tattoo inspired by your values.",
+                    "Write a limerick about your day.",
+                    "Create a stop-motion video with your phone.",
+                    "Draw a futuristic cityscape.",
+                    "Write a monologue for a movie character.",
+                    "Create a greeting card for a friend.",
+                    "Design a board game concept.",
+                    "Write a song about a place you love.",
+                    "Sketch a portrait of a loved one.",
+                    "Create a collage inspired by your emotions.",
+                    "Write a fairy tale with a modern twist.",
+                    "Design a costume for a fantasy character.",
+                    "Create a photo series of everyday objects.",
+                    "Write a poem about a season.",
+                    "Draw a scene from your favorite book.",
+                    "Create a short animation using an app.",
+                    "Write a letter to your younger self.",
+                    "Design a mural concept for your community.",
+                    "Write a poem about a starry night.",
+                    "Create a paper craft inspired by nature.",
+                    "Design a fictional magazine cover.",
+                    "Write a story about a lost treasure.",
+                    "Sketch a scene from a favorite movie.",
+                    "Create a digital artwork with a free app.",
+                    "Write a dialogue between two objects.",
+                    "Design a dream travel itinerary as a poster.",
+                    "Create a photo collage of your favorite moments.",
+                    "Write a short script for a comedy skit.",
+                    "Sketch a mythical creature.",
+                    "Create a bookmark with a positive message.",
+                    "Write a poem about a river’s journey.",
+                    "Design a pattern for fabric or wallpaper.",
+                    "Create a vision board for your goals.",
+                    "Write a story about a time traveler.",
+                    "Sketch a local landmark.",
+                    "Create a mixed-media artwork.",
+                    "Write a letter to a historical figure.",
+                    "Design a fictional product advertisement.",
+                    "Create a photo story with captions.",
+                    "Write a poem about a dream you had.",
+                    "Sketch a scene from your imagination.",
+                    "Create a scrapbook page of recent memories."
+                ]
+            },
+            {
+                group: "Gratitude & Reflection",
+                icon: "fa-solid fa-heart",
+                colorClass: "gratitude-reflection",
+                items: [
+                    "Write down 3 things you’re grateful for today.",
+                    "Reflect on a happy memory from the past week.",
+                    "List 3 people who make your life better and why.",
+                    "Write a letter to your future self about today.",
+                    "Reflect on a challenge you overcame this year.",
+                    "Write about a time you felt truly proud.",
+                    "List 3 things you love about yourself.",
+                    "Reflect on a moment that made you smile today.",
+                    "Write down a goal you achieved recently.",
+                    "Journal about a person who inspires you.",
+                    "Write about a kind gesture you received.",
+                    "Reflect on a lesson you learned recently.",
+                    "List 3 places that bring you joy.",
+                    "Write a thank-you note to yourself.",
+                    "Reflect on a time you helped someone.",
+                    "List 3 strengths you’re proud of.",
+                    "Journal about a favorite family tradition.",
+                    "Write about a moment of unexpected joy.",
+                    "Reflect on how far you’ve come this year.",
+                    "List 3 things you’re excited about.",
+                    "Write about a skill you’ve improved.",
+                    "Reflect on a time you felt at peace.",
+                    "List 3 ways you’ve grown personally.",
+                    "Write about a favorite memory with a friend.",
+                    "Reflect on a time you felt brave.",
+                    "List 3 things that make your day better.",
+                    "Journal about a goal you want to achieve.",
+                    "Write about a time you laughed hard.",
+                    "Reflect on a moment of connection.",
+                    "List 3 reasons you’re hopeful for the future.",
+                    "Write about a time you felt truly understood.",
+                    "Reflect on a moment of clarity you experienced.",
+                    "List 3 things you appreciate about your home.",
+                    "Write about a time you felt inspired.",
+                    "Reflect on a small win from this week.",
+                    "List 3 qualities you admire in others.",
+                    "Journal about a time you felt free.",
+                    "Write about a moment you felt strong.",
+                    "Reflect on a time you made a difference.",
+                    "List 3 things you’re curious about.",
+                    "Write about a time you felt loved.",
+                    "Reflect on a moment of gratitude for nature.",
+                    "List 3 ways you’ve helped someone recently.",
+                    "Write about a time you felt hopeful.",
+                    "Reflect on a moment you felt balanced.",
+                    "List 3 things you’re proud of today.",
+                    "Journal about a dream you have.",
+                    "Write about a time you felt connected.",
+                    "Reflect on a moment of personal growth.",
+                    "List 3 things that bring you peace.",
+                    "Write about a time you felt completely at ease.",
+                    "Reflect on a moment you felt empowered.",
+                    "List 3 things you value in your life.",
+                    "Write about a time you felt supported.",
+                    "Reflect on a moment you felt creative.",
+                    "List 3 ways you’ve shown kindness.",
+                    "Journal about a hope for the future.",
+                    "Write about a time you felt adventurous.",
+                    "Reflect on a moment you felt grateful for family.",
+                    "List 3 things you appreciate about your community.",
+                    "Write about a time you felt accomplished.",
+                    "Reflect on a moment you felt safe.",
+                    "List 3 things you’ve learned about yourself.",
+                    "Journal about a moment of pure happiness.",
+                    "Write about a time you felt generous.",
+                    "Reflect on a moment you felt connected to nature.",
+                    "List 3 ways you’ve inspired others.",
+                    "Write about a time you felt at home.",
+                    "Reflect on a moment you felt authentic.",
+                    "List 3 things you’re thankful for this month.",
+                    "Journal about a time you felt resilient.",
+                    "Write about a moment you felt joyful.",
+                    "Reflect on a time you felt part of something bigger."
+                ]
+            },
+            {
+                group: "Connection & Community",
+                icon: "fa-solid fa-users",
+                colorClass: "connection-community",
+                items: [
+                    "Call a friend you haven’t spoken to in a while.",
+                    "Send a thank-you note to someone who helped you.",
+                    "Join an online community discussion or forum.",
+                    "Volunteer for a local community event (virtually or in-person).",
+                    "Offer to help a neighbor with a small task.",
+                    "Host a virtual coffee chat with a friend.",
+                    "Compliment a stranger (safely and respectfully).",
+                    "Donate to a cause you care about (time or money).",
+                    "Share a positive post on social media to inspire others.",
+                    "Share a recipe with a family member.",
+                    "Write a letter to a teacher who inspired you.",
+                    "Organize a game night with friends.",
+                    "Join a local club or group activity.",
+                    "Send a care package to a loved one.",
+                    "Offer to teach someone a skill you know.",
+                    "Attend a community workshop or talk.",
+                    "Share a book recommendation with a friend.",
+                    "Help a friend with a small task.",
+                    "Invite someone for a walk and talk.",
+                    "Post about a local event to spread the word.",
+                    "Send a message to check in on someone.",
+                    "Organize a group to support a cause.",
+                    "Share a funny story with a friend.",
+                    "Offer to babysit or pet-sit for a friend.",
+                    "Join a virtual book club discussion.",
+                    "Send a handwritten note to a relative.",
+                    "Collaborate on a project with someone new.",
+                    "Share a playlist with a friend.",
+                    "Help clean a shared community space.",
+                    "Introduce two friends who might connect.",
+                    "Host a virtual movie night with friends.",
+                    "Share a gardening tip with a neighbor.",
+                    "Organize a potluck with your community.",
+                    "Send a motivational quote to a friend.",
+                    "Volunteer to mentor someone in your field.",
+                    "Share a craft idea with a family member.",
+                    "Attend a local cultural event.",
+                    "Offer to run an errand for someone busy.",
+                    "Join a community sports team or game.",
+                    "Send a photo to a friend to brighten their day.",
+                    "Organize a neighborhood book swap.",
+                    "Share a life hack with a friend.",
+                    "Host a storytelling night with friends.",
+                    "Offer to help with a community garden.",
+                    "Send a voice message to a loved one.",
+                    "Join a local cleanup initiative.",
+                    "Share a favorite podcast with a friend.",
+                    "Organize a virtual trivia night.",
+                    "Offer to listen to someone who needs to talk.",
+                    "Create a group chat to stay connected.",
+                    "Organize a virtual craft night with friends.",
+                    "Share a workout tip with a friend.",
+                    "Host a community picnic.",
+                    "Send a postcard to a distant friend.",
+                    "Organize a local talent showcase.",
+                    "Share a mindfulness tip with a family member.",
+                    "Join a community art project.",
+                    "Offer to help a friend organize their space.",
+                    "Host a virtual cooking class with friends.",
+                    "Share a memory with a childhood friend.",
+                    "Organize a community walking group.",
+                    "Send a small gift to a friend ‘just because.’",
+                    "Join a local history group.",
+                    "Share a journaling prompt with a friend.",
+                    "Organize a virtual karaoke night.",
+                    "Offer to help a friend with a creative project.",
+                    "Host a community discussion on wellbeing.",
+                    "Share a favorite quote with a loved one.",
+                    "Organize a neighborhood scavenger hunt.",
+                    "Send a care note to someone struggling.",
+                    "Join a community music jam session.",
+                    "Share a relaxation technique with a friend.",
+                    "Organize a virtual board game night.",
+                    "Offer to help a friend plan an event."
+                ]
+            },
+            {
+                group: "Nature & Environment",
+                icon: "fa-solid fa-leaf",
+                colorClass: "nature-environment",
+                items: [
+                    "Take a 10-minute walk and notice 5 natural elements around you.",
+                    "Plant a seed or water a plant you already have.",
+                    "Observe clouds and describe their shapes in your mind.",
+                    "Collect 5 leaves and compare their shapes.",
+                    "Take a photo of something beautiful in nature.",
+                    "Start a small herb garden at home.",
+                    "Feed birds or create a bird feeder.",
+                    "Smell a flower or tree and describe its scent.",
+                    "Watch a nature documentary clip (5 minutes).",
+                    "Visit a park and count the types of trees you see.",
+                    "Pick up trash during a short walk.",
+                    "Sit outside and listen to birds for 5 minutes.",
+                    "Draw a picture of a natural scene.",
+                    "Learn about a local plant species.",
+                    "Watch ants or insects and observe their behavior.",
+                    "Lie on the grass and watch the sky for 5 minutes.",
+                    "Identify a constellation at night.",
+                    "Collect natural items (e.g., pebbles) for a craft.",
+                    "Learn about local wildlife in your area.",
+                    "Water a community garden if available.",
+                    "Take a barefoot walk on grass or sand.",
+                    "Observe the sunrise or sunset.",
+                    "Learn about composting and try it.",
+                    "Sketch a tree or flower in detail.",
+                    "Visit a nearby body of water and reflect.",
+                    "Research a local environmental issue.",
+                    "Plant a native flower in your yard.",
+                    "Listen to nature sounds online for 5 minutes.",
+                    "Take a photo of a unique natural texture.",
+                    "Learn about a local ecosystem.",
+                    "Create a mini nature journal for the day.",
+                    "Observe the wind’s effect on trees for 5 minutes.",
+                    "Learn about a migratory bird species.",
+                    "Take a photo of a natural pattern (e.g., bark).",
+                    "Explore a nature trail nearby.",
+                    "Learn about local pollinators like bees.",
+                    "Create a small rock garden.",
+                    "Observe the moon’s phase tonight.",
+                    "Learn about sustainable gardening practices.",
+                    "Take a 5-minute walk to notice seasonal changes.",
+                    "Sketch a natural object in your home.",
+                    "Learn about a local conservation effort.",
+                    "Create a nature-inspired haiku.",
+                    "Observe a spider web and its design.",
+                    "Learn about invasive plant species.",
+                    "Take a photo of a sunrise or sunset.",
+                    "Create a leaf rubbing artwork.",
+                    "Learn about a local river or lake.",
+                    "Observe animal tracks in a park.",
+                    "Share a nature fact with a friend.",
+                    "Learn about a local bird migration pattern.",
+                    "Create a nature-themed photo collage.",
+                    "Observe the texture of tree bark for 5 minutes.",
+                    "Learn about a local wetland ecosystem.",
+                    "Take a photo of a natural shadow.",
+                    "Create a pressed flower bookmark.",
+                    "Learn about a local forest preservation effort.",
+                    "Observe the behavior of squirrels or small animals.",
+                    "Take a 5-minute walk to notice plant colors.",
+                    "Learn about a local marine ecosystem.",
+                    "Create a nature-inspired drawing with charcoal.",
+                    "Observe the movement of water in a stream.",
+                    "Learn about a local climate adaptation project.",
+                    "Take a photo of a natural reflection.",
+                    "Create a nature-themed gratitude list.",
+                    "Learn about a local endangered plant.",
+                    "Observe the shapes of stones for 5 minutes.",
+                    "Take a 5-minute walk to notice natural scents.",
+                    "Learn about a local wildlife rehabilitation center.",
+                    "Create a nature-inspired short story.",
+                    "Observe the patterns in a leaf’s veins.",
+                    "Learn about a local green space initiative.",
+                    "Take a photo of a natural contrast (e.g., light/shadow).",
+                    "Create a nature-themed poetry collection."
+                ]
+            },
+            {
+                group: "Learning & Growth",
+                icon: "fa-solid fa-book",
+                colorClass: "learning-growth",
+                items: [
+                    "Learn a new word and use it in a sentence today.",
+                    "Read a short article about a topic you’re curious about.",
+                    "Watch a 5-minute educational video online.",
+                    "Learn a basic phrase in a new language.",
+                    "Solve a crossword or Sudoku puzzle.",
+                    "Research a historical figure you admire.",
+                    "Learn a quick fact about a new country.",
+                    "Memorize a short poem or quote.",
+                    "Try a new hobby for 10 minutes (e.g., knitting).",
+                    "Learn about a new scientific discovery.",
+                    "Read a Wikipedia page on a random topic.",
+                    "Learn a keyboard shortcut for a tool you use.",
+                    "Watch a TED Talk for 10 minutes.",
+                    "Practice a mental math challenge for 5 minutes.",
+                    "Learn about a famous artwork.",
+                    "Try a new recipe and learn a cooking technique.",
+                    "Research a philosophical concept.",
+                    "Learn a fact about space exploration.",
+                    "Practice a new vocabulary word in context.",
+                    "Read about a major world event from history.",
+                    "Learn a basic coding concept online.",
+                    "Explore a new genre of music or literature.",
+                    "Memorize the capital cities of 5 countries.",
+                    "Learn about a type of meditation.",
+                    "Research a local historical site.",
+                    "Try a 5-minute brain teaser.",
+                    "Learn a new photography tip.",
+                    "Read about a different culture’s traditions.",
+                    "Practice a new skill for 10 minutes.",
+                    "Learn about a renewable energy technology.",
+                    "Learn about a famous scientist’s discovery.",
+                    "Read about a mathematical concept.",
+                    "Learn a new fact about the human body.",
+                    "Explore a new app for learning.",
+                    "Research a famous speech or quote.",
+                    "Learn about a type of architecture.",
+                    "Try a 5-minute logic puzzle.",
+                    "Learn a new fact about the ocean.",
+                    "Read about a famous inventor.",
+                    "Learn a basic sewing technique.",
+                    "Explore a new field of science.",
+                    "Learn about a famous musician’s life.",
+                    "Try a 5-minute memory game.",
+                    "Learn a fact about a rare animal.",
+                    "Read about a historical artifact.",
+                    "Learn a new journaling technique.",
+                    "Explore a new type of exercise.",
+                    "Learn about a famous poet.",
+                    "Try a 5-minute trivia quiz online.",
+                    "Learn a fact about a planet.",
+                    "Learn about a famous explorer’s journey.",
+                    "Read about a psychological theory.",
+                    "Learn a new fact about ancient civilizations.",
+                    "Explore a new creative writing technique.",
+                    "Research a famous bridge or structure.",
+                    "Learn about a type of dance.",
+                    "Try a 5-minute riddle challenge.",
+                    "Learn a fact about a natural phenomenon.",
+                    "Read about a famous author’s life.",
+                    "Learn a basic gardening technique.",
+                    "Explore a new type of art medium.",
+                    "Learn about a famous activist.",
+                    "Try a 5-minute speed-reading exercise.",
+                    "Learn a fact about a historical battle.",
+                    "Read about a type of renewable resource.",
+                    "Learn a new presentation skill.",
+                    "Explore a new type of cuisine.",
+                    "Learn about a famous athlete’s career.",
+                    "Try a 5-minute problem-solving challenge.",
+                    "Learn a fact about a cultural festival.",
+                    "Read about a type of technology innovation.",
+                    "Learn a new organization skill.",
+                    "Explore a new type of musical instrument.",
+                    "Learn about a famous philosopher."
+                ]
+            },
+            {
+                group: "Rest & Relaxation",
+                icon: "fa-solid fa-bed",
+                colorClass: "rest-relaxation",
+                items: [
+                    "Take a 15-minute nap to recharge.",
+                    "Listen to calming instrumental music for 10 minutes.",
+                    "Practice progressive muscle relaxation for 5 minutes.",
+                    "Take a warm bath or shower to unwind.",
+                    "Read a chapter of a book in a cozy spot.",
+                    "Watch a sunset or sunrise to relax.",
+                    "Do a 5-minute stretching routine before bed.",
+                    "Sip herbal tea while sitting quietly.",
+                    "Listen to a guided sleep story.",
+                    "Lie down and focus on relaxing each body part.",
+                    "Practice 5 minutes of deep breathing.",
+                    "Sit in a quiet space and close your eyes.",
+                    "Listen to ocean waves or rain sounds for 10 minutes.",
+                    "Take a 10-minute break with no screens.",
+                    "Cuddle with a pet or loved one for 5 minutes.",
+                    "Do a 5-minute gentle yoga stretch.",
+                    "Light a candle and watch the flame for 3 minutes.",
+                    "Write down your worries and set them aside.",
+                    "Take a slow walk in a calm area.",
+                    "Practice a 5-minute visualization of a beach.",
+                    "Listen to a favorite calming song.",
+                    "Spend 5 minutes daydreaming peacefully.",
+                    "Take a moment to enjoy a warm drink.",
+                    "Practice a 3-minute body relaxation scan.",
+                    "Sit by a window and watch the world go by.",
+                    "Do a 5-minute neck and shoulder stretch.",
+                    "Lie on your back and focus on your breath.",
+                    "Enjoy a 10-minute audio relaxation session.",
+                    "Take a break to smell a soothing scent.",
+                    "Rest your eyes by closing them for 5 minutes.",
+                    "Practice a 5-minute hand massage.",
+                    "Listen to a calming podcast for 10 minutes.",
+                    "Do a 3-minute foot relaxation exercise.",
+                    "Spend 5 minutes in a cozy blanket.",
+                    "Practice a 5-minute guided imagery session.",
+                    "Take a 5-minute break to stare at the sky.",
+                    "Listen to a soft piano melody for 5 minutes.",
+                    "Do a 3-minute facial relaxation exercise.",
+                    "Spend 5 minutes journaling your thoughts.",
+                    "Practice a 5-minute mindful sipping of tea.",
+                    "Take a 5-minute break to stretch your fingers.",
+                    "Listen to a nature-inspired meditation track.",
+                    "Do a 5-minute lower back stretch.",
+                    "Spend 5 minutes in a quiet, dimly lit room.",
+                    "Practice a 3-minute gratitude breathing exercise.",
+                    "Take a 5-minute break to pet an animal.",
+                    "Listen to a calming audiobook for 10 minutes.",
+                    "Do a 5-minute wrist and hand stretch.",
+                    "Spend 5 minutes visualizing a forest.",
+                    "Practice a 3-minute relaxation countdown.",
+                    "Practice a 5-minute ear massage for relaxation.",
+                    "Listen to a gentle guitar melody for 5 minutes.",
+                    "Do a 3-minute scalp relaxation exercise.",
+                    "Spend 5 minutes in a hammock or comfy chair.",
+                    "Practice a 5-minute visualization of a meadow.",
+                    "Take a 5-minute break to sip cool water.",
+                    "Listen to a calming flute melody for 5 minutes.",
+                    "Do a 5-minute calf and ankle stretch.",
+                    "Spend 5 minutes watching clouds drift by.",
+                    "Practice a 3-minute mindful breathing with pauses.",
+                    "Take a 5-minute break to hug a pillow.",
+                    "Listen to a calming harp melody for 5 minutes.",
+                    "Do a 5-minute hip and thigh stretch.",
+                    "Spend 5 minutes imagining a peaceful garden.",
+                    "Practice a 3-minute mindfulness of silence.",
+                    "Take a 5-minute break to feel soft textures.",
+                    "Listen to a calming ambient track for 5 minutes.",
+                    "Do a 5-minute chest-opening stretch.",
+                    "Spend 5 minutes visualizing a starry sky.",
+                    "Practice a 3-minute mindful body scan.",
+                    "Take a 5-minute break to listen to your breath.",
+                    "Listen to a calming violin melody for 5 minutes.",
+                    "Do a 5-minute full-body relaxation stretch."
+                ]
+            }
+        ];
+
+        // Function to generate random activities and tagline
+        function generateActivities() {
+            const activityContainer = document.getElementById('activityContainer');
+            const challengeText = document.getElementById('challengeText');
+            if (!activityContainer || !challengeText) {
+                console.error('Activity container or challenge text not found!');
+                return;
+            }
+            activityContainer.innerHTML = ''; // Clear previous activities
+
+            // Select random tagline
+            const randomTagline = taglines[Math.floor(Math.random() * taglines.length)];
+            challengeText.textContent = randomTagline;
+
+            // Shuffle groups and select 6
+            const shuffledGroups = [...activities].sort(() => 0.5 - Math.random());
+            const selectedGroups = shuffledGroups.slice(0, 6);
+
+            // Generate HTML for activities
+            selectedGroups.forEach(group => {
+                const randomActivity = group.items[Math.floor(Math.random() * group.items.length)];
+                const card = document.createElement('div');
+                card.className = 'activity-card';
+                card.innerHTML = `
+                    <div class="icon ${group.colorClass}">
+                        <i class="${group.icon}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <h3>${group.group}</h3>
+                        <p>${randomActivity}</p>
+                    </div>
+                `;
+                activityContainer.appendChild(card);
+            });
+            // console.log('Generated activities:', selectedGroups.map(g => g.group), 'Tagline:', randomTagline);
+        }
+
+        // Generate activities on page load
+        window.onload = generateActivities;
+    </script>
+</body>
+</html>
